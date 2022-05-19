@@ -1,0 +1,10 @@
+obj-y += common/
+obj-$(CONFIG_COMPONENTS_AW) += sound/
+obj-$(CONFIG_STANDBY) += standby/
+obj-$(CONFIG_DEBUG_BACKTRACE) += backtrace/
+obj-$(CONFIG_LINUX_DEBUG) += linux_debug/
+obj-y += testbench/
+#obj-y += message_manager/
+obj-y += oemhead/
+obj-y += misc/
+obj-$(CONFIG_PM_CLIENT_DSP_WAITI) += pm_client/

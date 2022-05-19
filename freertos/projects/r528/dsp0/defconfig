@@ -1,0 +1,248 @@
+#
+# Automatically generated file; DO NOT EDIT.
+# Cadence Xtensa DSP Configuration
+#
+
+#
+# Target options
+#
+# CONFIG_ARCH_SUN50IW11 is not set
+CONFIG_ARCH_SUN8IW20=y
+# CONFIG_ARCH_SUN20IW2 is not set
+CONFIG_ARCH_PLATFORM="sun8iw20"
+# CONFIG_FPGA_PLATFORM is not set
+CONFIG_EVB_PLATFORM=y
+CONFIG_CORE_DSP0=y
+CONFIG_CORE_ID="dsp0"
+CONFIG_LSP_NORMAL_START=y
+# CONFIG_LSP_JTAG_START is not set
+# CONFIG_LSP_PERF_MEM_TEST is not set
+CONFIG_LSP_DIR="default"
+
+#
+# Kernel options
+#
+CONFIG_KERNEL_FREERTOS=y
+CONFIG_KERNEL_XTENSA_V1_7=y
+CONFIG_KERNEL_VERSION_DIR="FreeRTOS_xtensa_v1.7"
+# CONFIG_MEMMANG_HEAP_1 is not set
+# CONFIG_MEMMANG_HEAP_2 is not set
+# CONFIG_MEMMANG_HEAP_3 is not set
+CONFIG_MEMMANG_HEAP_4=y
+# CONFIG_MEMMANG_HEAP_5 is not set
+CONFIG_PORT_XCC_XTENSA=y
+CONFIG_PORT_ARCH_DIR="xtensa"
+CONFIG_PORT_XEA2=y
+# CONFIG_XCC_O0 is not set
+CONFIG_XCC_O2=y
+# CONFIG_XCC_O3 is not set
+CONFIG_XCC_OPT="O2"
+
+#
+# Drivers options
+#
+
+#
+# Configure all required driver sub-systems
+#
+CONFIG_DRIVER_SYSCONFIG=y
+
+#
+# SoC related device drivers
+#
+CONFIG_DRIVERS_CHIP=y
+
+#
+# PRCM Devices
+#
+# CONFIG_DRIVERS_PRCM is not set
+
+#
+# CCMU Devices
+#
+CONFIG_DRIVERS_CCMU=y
+# CONFIG_DRIVERS_SUNXI_CLK is not set
+CONFIG_DRIVERS_SUNXI_CCU=y
+# CONFIG_HAL_TEST_CCU is not set
+
+#
+# UART Devices
+#
+CONFIG_DRIVERS_UART=y
+# CONFIG_HAL_TEST_UART is not set
+# CONFIG_SUNXI_UART_SUPPORT_POLL is not set
+# CONFIG_SUNXI_UART_REGISTER_UART0 is not set
+# CONFIG_SUNXI_UART_REGISTER_UART1 is not set
+# CONFIG_SUNXI_UART_REGISTER_UART2 is not set
+# CONFIG_SUNXI_UART_REGISTER_UART3 is not set
+
+#
+# INTC driver
+#
+CONFIG_DRIVERS_INTC=y
+
+#
+# INTC option features
+#
+# CONFIG_DRIVERS_INTC_FEATURE_1 is not set
+
+#
+# DMA Devices
+#
+CONFIG_DRIVERS_DMA=y
+CONFIG_HAL_TEST_DMA=y
+
+#
+# GPIO Devices
+#
+CONFIG_DRIVERS_GPIO=y
+# CONFIG_HAL_TEST_GPIO is not set
+
+#
+# TWI Devices
+#
+# CONFIG_DRIVERS_TWI is not set
+
+#
+# WATCHDOG Devices
+#
+# CONFIG_DRIVERS_WATCHDOG is not set
+
+#
+# Message Box Devices
+#
+CONFIG_DRIVERS_MSGBOX=y
+# CONFIG_DRIVERS_MSGBOX_SX is not set
+CONFIG_DRIVERS_MSGBOX_AMP=y
+
+#
+# HW SPINLOCK Devices
+#
+# CONFIG_DRIVERS_HWSPINLOCK is not set
+
+#
+# TIMER Devices
+#
+CONFIG_DRIVERS_TIMER=y
+# CONFIG_HAL_TEST_TIMER is not set
+# CONFIG_DRIVERS_HTIMER is not set
+# CONFIG_DRIVERS_SOUND is not set
+
+#
+# Board related device drivers
+#
+CONFIG_DRIVERS_BOARD=y
+
+#
+# HAL OSAL API
+#
+CONFIG_HAL_OSAL=y
+
+#
+# Components options
+#
+
+#
+# System components
+#
+
+#
+# Allwinner components
+#
+CONFIG_COMPONENTS_AW=y
+
+#
+# AW Sound Compenents Only For Dsp
+#
+CONFIG_COMPONENTS_AW_ALSA_RPAF=y
+CONFIG_COMPONENTS_AW_ALSA_RPAF_COMPONENT=y
+CONFIG_COMPONENTS_AW_ALSA_RPAF_REMOTE_AMP=0
+CONFIG_COMPONENTS_AW_ALSA_RPAF_READ_CH=1
+CONFIG_COMPONENTS_AW_ALSA_RPAF_WRITE_CH=1
+# CONFIG_STANDBY is not set
+CONFIG_OEMHEAD=y
+
+#
+# Backtrace Support
+#
+CONFIG_DEBUG_BACKTRACE=y
+
+#
+# Linux Debug Support
+#
+# CONFIG_LINUX_DEBUG is not set
+CONFIG_PM_CLIENT_DSP_WAITI=y
+
+#
+# Testbench (for development)
+#
+# CONFIG_AW_TEST_MEM is not set
+# CONFIG_AW_TEST_TIMER is not set
+
+#
+# DSPFREQ option features
+#
+CONFIG_AW_DSPFREQ=y
+# CONFIG_SUPPORT_32K is not set
+# CONFIG_CLOSE_PLL_AUDIO0 is not set
+
+#
+# dump reg option features
+#
+# CONFIG_ADJUST_REG is not set
+# CONFIG_CLOSE_SUART_PIN is not set
+CONFIG_AW_JTAG_DEBUG=y
+# CONFIG_JTAG_DEBUG_DSP1 is not set
+CONFIG_MEMTESTER=y
+
+#
+# Performance Testing
+#
+CONFIG_AW_PERF_MEM_ACC=y
+
+#
+# Miscellaneous Support
+#
+CONFIG_BITOPS_FLS=y
+
+#
+# Thirdparty components
+#
+CONFIG_COMPONENTS_THIRDPARTY=y
+
+#
+# Xtensa components
+#
+CONFIG_COMPONENTS_XTENSA=y
+# CONFIG_COMPONENTS_XTENSA_XTOS is not set
+# CONFIG_COMPONENTS_XTENSA_LIBSIM is not set
+CONFIG_COMPONENTS_XTENSA_LIBGLOSS=y
+# CONFIG_COMPONENTS_XTENSA_HIFI4_VFPU_LIBRARY is not set
+
+#
+# FreeRTOS components
+#
+CONFIG_COMPONENTS_FREERTOS=y
+CONFIG_COMPONENTS_FREERTOS_CLI=y
+
+#
+# Supported commands
+#
+# CONFIG_FREERTOS_CLI_CMD_TEMPLATE is not set
+CONFIG_FREERTOS_CLI_CMD_MEM_RW=y
+CONFIG_FREERTOS_CLI_CMD_FREE=y
+
+#
+# Algorithm common
+#
+CONFIG_COMPONENTS_ALGO_COMMON=y
+CONFIG_COMPONENTS_ALGO_GENERATE=y
+# CONFIG_COMPONENTS_ALGO_SAMPLE is not set
+CONFIG_COMPONENTS_MSGBOX_DEMO=y
+
+#
+# Projects options
+#
+# CONFIG_PROJECT_SIM is not set
+CONFIG_PROJECT_R528=y
+CONFIG_PROJECT_DIR="r528"

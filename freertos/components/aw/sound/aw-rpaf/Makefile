@@ -1,0 +1,2 @@
+obj-$(CONFIG_COMPONENTS_AW_ALSA_RPAF) += common.o
+obj-$(CONFIG_COMPONENTS_AW_ALSA_RPAF_COMPONENT) += component.o

@@ -1,0 +1,11 @@
+config FREERTOS_CLI_CMD_TEMPLATE
+	bool "template command (for illustration)"
+	default y
+
+config FREERTOS_CLI_CMD_MEM_RW
+	bool "Memory read/write"
+	default n
+
+config FREERTOS_CLI_CMD_FREE
+	bool "Free Memory in Heap"
+	default n

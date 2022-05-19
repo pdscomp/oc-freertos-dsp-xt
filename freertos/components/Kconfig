@@ -1,0 +1,22 @@
+comment "System components"
+
+menu "Allwinner components"
+
+config COMPONENTS_AW
+	bool
+	default y
+
+source "components/aw/Kconfig"
+
+endmenu
+
+menu "Thirdparty components"
+
+config COMPONENTS_THIRDPARTY
+	bool
+	default y
+
+source "components/thirdparty/Kconfig"
+
+endmenu
+

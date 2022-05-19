@@ -1,0 +1,21 @@
+mainmenu "Cadence Xtensa DSP Configuration"
+
+menu "Target options"
+source "arch/Kconfig"
+endmenu
+
+menu "Kernel options"
+source "kernel/Kconfig"
+endmenu
+
+menu "Drivers options"
+source "drivers/Kconfig"
+endmenu
+
+menu "Components options"
+source "components/Kconfig"
+endmenu
+
+menu "Projects options"
+source "projects/Kconfig"
+endmenu

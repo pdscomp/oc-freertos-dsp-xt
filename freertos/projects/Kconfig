@@ -1,0 +1,22 @@
+choice
+	prompt "Configure Application"
+	default PROJECT_SIM
+
+config PROJECT_SIM
+	bool "Cadence simulator demos"
+	---help---
+		the offical demos of foss-xtensa from Github
+
+config PROJECT_R528
+	bool "R528 DSP project"
+	depends on ARCH_SUN8IW20
+
+endchoice
+
+config PROJECT_DIR
+	string
+	default "r528" if PROJECT_R528
+	---help---
+		This value must be corresponding to the name of
+		the project directory.
+

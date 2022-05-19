@@ -1,0 +1,3 @@
+config AW_PERF_MEM_ACC
+	bool "Memory access performance test"
+	default n

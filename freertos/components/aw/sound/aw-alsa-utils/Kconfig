@@ -1,0 +1,41 @@
+config COMPONENTS_AW_ALSA_UTILS_DSP
+	bool "Allwinner alsa dsp utilities"
+	depends on COMPONENTS_AW_ALSA_LIB_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.
+
+config COMPONENTS_AW_ALSA_UTILS_APLAY_DSP
+	bool "Allwinner alsa dsp <aplay>"
+	depends on COMPONENTS_AW_ALSA_UTILS_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.
+
+config COMPONENTS_AW_ALSA_UTILS_ARECORD_DSP
+	bool "Allwinner alsa dsp <arecord>"
+	depends on COMPONENTS_AW_ALSA_UTILS_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.
+
+config COMPONENTS_AW_ALSA_UTILS_AMIXER_DSP
+	bool "Allwinner alsa dsp <amixer>"
+	depends on COMPONENTS_AW_ALSA_UTILS_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.
+
+config COMPONENTS_AW_ALSA_UTILS_BUILTIN_WAV_DSP
+	bool "Allwinner alsa dsp builtin wav file"
+	depends on COMPONENTS_AW_ALSA_UTILS_APLAY_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.
+
+config COMPONENTS_AW_ALSA_UTILS_ALOOP_DSP
+	bool "Allwinner alsa dsp <aloop>"
+	depends on COMPONENTS_AW_ALSA_UTILS_DSP
+	default n
+	help
+	  This is package for aw-alsa-lib utilities, only used for Allwinner DSP RTOS.

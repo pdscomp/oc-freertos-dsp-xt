@@ -1,0 +1,1 @@
+obj-$(CONFIG_COMPONENTS_XTENSA_HIFI4_VFPU_LIBRARY) += hifi4_vfpu_library/

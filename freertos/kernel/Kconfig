@@ -1,0 +1,82 @@
+config KERNEL_FREERTOS
+	bool "Support FreeRTOS kernel"
+	default y
+
+if KERNEL_FREERTOS
+
+choice
+	prompt "Kernel version"
+	default KERNEL_XTENSA_V1_7
+
+config KERNEL_XTENSA_V1_7
+	bool "Use freertos kernel xtensa v1.7"
+endchoice
+
+config KERNEL_VERSION_DIR
+	string
+	default "FreeRTOS_xtensa_v1.7" if KERNEL_XTENSA_V1_7
+
+choice
+	prompt "Heap Memory Manager"
+	default MEMMANG_HEAP_4
+
+config MEMMANG_HEAP_1
+	bool "Use heap_1 to allocate memory"
+
+config MEMMANG_HEAP_2
+	bool "Use heap_2 to allocate memory"
+
+config MEMMANG_HEAP_3
+	bool "Use heap_3 to allocate memory"
+
+config MEMMANG_HEAP_4
+	bool "Use heap_4 to allocate memory"
+
+config MEMMANG_HEAP_5
+	bool "Use heap_5 to allocate memory"
+endchoice
+
+choice
+	prompt "Portable"
+	default PORT_XCC_XTENSA
+
+config PORT_XCC_XTENSA
+	bool "XCC/Xtensa"
+	---help---
+		FreeRTOS Port for Xtensa Configurable Processors
+endchoice
+
+config PORT_ARCH_DIR
+	string
+	default "xtensa" if PORT_XCC_XTENSA
+	---help---
+		This value must be corresponding to the name of
+		the specific arch directory.
+
+config PORT_XEA2
+	bool
+	default y if PORT_XCC_XTENSA
+	---help---
+		Xtensa Exception Architecture 2(XEA2) supports.
+
+choice
+	prompt "Xcc optimize registration"
+	default XCC_O0
+
+config XCC_O0
+	bool "Use for debug about dsp"
+
+config XCC_O2
+	bool "Use for normal start about dsp"
+
+config XCC_O3
+	bool "Use for ultimate performance about dsp"
+endchoice
+
+config XCC_OPT
+	string
+	default "O0" if XCC_O0
+	default "O2" if XCC_O2
+	default "O3" if XCC_O3
+
+endif

@@ -1,0 +1,75 @@
+choice
+	prompt "Target SoC platform"
+	default ARCH_SUN50IW11
+
+config ARCH_SUN50IW11
+	bool "sun50iw11"
+
+config ARCH_SUN8IW20
+	bool "sun8iw20"
+
+config ARCH_SUN20IW2
+	bool "sun20iw2"
+
+endchoice
+
+# define include arch dir
+config ARCH_PLATFORM
+	string
+	default "sun8iw20" if ARCH_SUN8IW20
+	default "sun20iw2" if ARCH_SUN20IW2
+	default "sun50iw11" if ARCH_SUN50IW11
+
+# define the development board
+choice
+	prompt "Development boards"
+	default EVB_PLATFORM
+
+config FPGA_PLATFORM
+	bool "FPGA board"
+
+config EVB_PLATFORM
+	bool "EVB board"
+
+endchoice
+
+# define DSP core
+choice
+	prompt "Select DSP core"
+	default CORE_DSP0
+
+config CORE_DSP0
+	bool "Core 0"
+
+config CORE_DSP1
+	bool "Core 1"
+	depends on ARCH_SUN50IW11
+
+endchoice
+
+# define dsp core id 
+config CORE_ID
+	string
+	default "dsp0" if CORE_DSP0
+	default "dsp1" if CORE_DSP1
+
+# choice LSP
+choice
+	prompt "Select LSP"
+	default LSP_NORMAL_START
+
+config LSP_NORMAL_START
+	bool "LSP for normal start"
+
+config LSP_JTAG_START
+	bool "LSP for jtag start"
+
+config LSP_PERF_MEM_TEST
+	bool "LSP for perf_mem test"
+
+endchoice
+
+# define the lsp
+if ARCH_SUN8IW20
+source "arch/sun8iw20/Kconfig"
+endif

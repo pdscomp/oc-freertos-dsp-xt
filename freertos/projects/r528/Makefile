@@ -1,0 +1,1 @@
+obj-$(CONFIG_CORE_DSP0) += dsp0/
