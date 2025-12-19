@@ -11,6 +11,9 @@
 #include <platform.h>
 #include <components/aw/linux_debug/debug_common.h>
 
+/* Klipper includes */
+#include "include/printer/scheder.h"
+
 #ifdef configSUPPORT_STATIC_ALLOCATION
 
 #ifdef CONFIG_COMPONENTS_AW_ALSA_RPAF
@@ -99,6 +102,36 @@ void vApplicationGetTimerTaskMemory(StaticTask_t ** ppxTimerTaskTCBBuffer,
 
 #endif
 
+/**
+ * @brief Klipper task function
+ * 
+ * This task runs the Klipper MCU firmware scheduler. The Klipper scheduler
+ * handles all timing-critical operations for 3D printer control including
+ * stepper motor control, sensor reading, and command processing.
+ * 
+ * Note: sched_main() is designed to run as the main control loop and does
+ * not return under normal circumstances. It uses setjmp/longjmp for error
+ * handling and recovery.
+ */
+static void vKlipperTask( void *pvParameters )
+{
+	(void) pvParameters;
+	
+	printf("Klipper task starting...\n");
+	
+	/* Call Klipper's main scheduler function.
+	 * This function initializes the Klipper subsystems and enters
+	 * the main scheduling loop. It should not return unless there
+	 * is a critical error.
+	 */
+	sched_main();
+	
+	/* If we get here, something went wrong with Klipper */
+	printf("ERROR: Klipper sched_main() returned unexpectedly!\n");
+	
+	/* Delete this task */
+	vTaskDelete(NULL);
+}
 
 int main(void)
 {
@@ -127,6 +160,27 @@ int main(void)
 	pm_standby_service_init();
 #endif
 
+	/* Create Klipper task
+	 * Stack size: 8KB (0x2000) - Klipper requires substantial stack for
+	 *             its scheduling and command processing operations
+	 * Priority: 2 - Higher than idle task to ensure timely processing
+	 */
+	BaseType_t xReturned = xTaskCreate(
+		vKlipperTask,           /* Task function */
+		"Klipper",              /* Task name */
+		0x2000,                 /* Stack size in words (8KB) */
+		NULL,                   /* Task parameters */
+		2,                      /* Task priority */
+		NULL                    /* Task handle (not needed) */
+	);
+	
+	if (xReturned != pdPASS) {
+		printf("ERROR: Failed to create Klipper task!\n");
+		return 1;
+	}
+	
+	printf("Starting FreeRTOS scheduler with Klipper task...\n");
+	
 	vTaskStartScheduler();
 
 	/* If we got here then scheduler failed. */
