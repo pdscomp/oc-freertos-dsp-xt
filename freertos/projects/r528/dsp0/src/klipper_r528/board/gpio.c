@@ -11,6 +11,18 @@
 #include "../../include/printer/scheder.h" // sched_shutdown
 #include "../../include/printer/basecmd.h"
 #include "../../include/board/debug.h"
+#include <gpio/gpio.h> // For BANK_MEM_SIZE, PINS_PER_BANK, and constants
+
+// Define missing constants from gpio.h
+#define MUX_OFFSET_BITS     3
+#define MUX_OFFSET_MASK     0x03
+#define MUX_SHIFT_MASK      0x07
+#define MUX_SHIFT_BITS      2
+#define PULL_OFFSET_BITS    4
+#define PULL_OFFSET_MASK    0x01
+#define PULL_SHIFT_MASK     0x0F
+#define PULL_SHIFT_BITS     1
+#define PINS_BANK_MASK      0x1F
 
 
 #define GPIOA_BASE            (SUNXI_GPIO_PBASE + 0x00000000)

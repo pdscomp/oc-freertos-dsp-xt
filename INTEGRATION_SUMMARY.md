@@ -192,6 +192,91 @@ When hardware is available:
 
 CodeQL security scan completed with no new vulnerabilities detected in the integration code.
 
+## Build System Fixes (December 2024)
+
+### Issue 1: Missing HAL Include Paths
+**Problem:** The build system wasn't properly exposing the rtos-hal headers through the symlink structure.
+
+**Root Cause:**
+- `freertos/drivers/hal` is a symlink to `../../rtos-hal/hal`
+- `freertos/drivers/hal/include` is a symlink to `../include` (resolving to `rtos-hal/include`)
+- The Makefile included `-Idrivers/hal/source` but not `-Idrivers/hal/include`
+- This prevented access to headers in `rtos-hal/include/osal/` and `rtos-hal/include/hal/`
+
+**Solution:**
+Modified `freertos/Makefile` line 49:
+```makefile
+# Before:
+INCS       += -Idrivers/hal/source
+
+# After:
+INCS       += -Idrivers/hal/include -Idrivers/hal/source
+```
+
+This change properly exposes the rtos-hal include directory via the symlink structure.
+
+### Issue 2: Missing GPIO Structure Definitions
+**Problem:** Multiple compilation errors about incomplete types:
+- `struct gpio_out` had incomplete type
+- `struct gpio_in` had incomplete type
+- `GPIO_TypeDef` was undeclared
+- Various GPIO constants were undeclared (MUX_OFFSET_BITS, PULL_OFFSET_BITS, etc.)
+
+**Root Cause:**
+The Klipper GPIO code uses custom wrapper structures (`gpio_out`, `gpio_in`) to encapsulate GPIO hardware registers and pin information, but these structures were never defined in the header file.
+
+**Solution:**
+Modified `freertos/projects/r528/dsp0/src/include/board/gpio.h` to add structure definitions:
+
+```c
+// GPIO register structure for Allwinner/Sunxi processors
+typedef struct {
+    uint32_t AFR[4];      // Mux control registers (0x00-0x0C)
+    uint32_t ODR;         // Data register (0x10)
+    uint32_t DLEVEL[2];   // Drive level registers (0x14-0x18)
+    uint32_t PUPDR[2];    // Pull up/down registers
+} GPIO_TypeDef;
+
+// GPIO pin structures
+struct gpio_out {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint32_t pin;
+};
+
+struct gpio_in {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint32_t pin;
+};
+```
+
+Modified `freertos/projects/r528/dsp0/src/klipper_r528/board/gpio.c` to:
+1. Include `<gpio/gpio.h>` to access HAL constants (BANK_MEM_SIZE, PINS_PER_BANK, etc.)
+2. Define missing bit manipulation constants:
+```c
+#define MUX_OFFSET_BITS     3
+#define MUX_OFFSET_MASK     0x03
+#define MUX_SHIFT_MASK      0x07
+#define MUX_SHIFT_BITS      2
+#define PULL_OFFSET_BITS    4
+#define PULL_OFFSET_MASK    0x01
+#define PULL_SHIFT_MASK     0x0F
+#define PULL_SHIFT_BITS     1
+#define PINS_BANK_MASK      0x1F
+```
+
+**Results:**
+- All GPIO-related files now compile successfully:
+  - `projects/r528/dsp0/src/klipper_r528/board/gpio.o` ✅
+  - `projects/r528/dsp0/src/klipper_r528/hal_call/gpiocmds.o` ✅
+  - `projects/r528/dsp0/src/klipper_r528/hal_call/endstop.o` ✅
+- Build progresses significantly further
+- Remaining errors are in unrelated files (armcm_timer.o, etc.)
+
+### Build Status
+The build system fixes resolved the critical include path and GPIO structure issues. The build now successfully compiles the entire GPIO subsystem and most of the Klipper integration code.
+
 ## Conclusion
 
 The integration successfully:
@@ -202,5 +287,7 @@ The integration successfully:
 ✅ Documents the architecture and design decisions
 ✅ Passes code review with only minor style fixes needed
 ✅ Passes security scan with no vulnerabilities
+✅ Fixes HAL include path issues
+✅ Resolves GPIO structure definition problems
 
 The integration is ready for build testing when the Xtensa toolchain is available, and ready for hardware testing when the R528 DSP hardware is available.

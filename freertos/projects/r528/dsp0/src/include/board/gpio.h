@@ -6,6 +6,28 @@
 #include <sunxi_hal_pwm.h>
 
 #include <sunxi_hal_spi.h>
+
+// Forward declaration for GPIO register structure
+typedef struct {
+    uint32_t AFR[4];      // Mux control registers (0x00-0x0C)
+    uint32_t ODR;         // Data register (0x10)
+    uint32_t DLEVEL[2];   // Drive level registers (0x14-0x18)
+    uint32_t PUPDR[2];    // Pull up/down registers
+} GPIO_TypeDef;
+
+// GPIO pin structures
+struct gpio_out {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint32_t pin;
+};
+
+struct gpio_in {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint32_t pin;
+};
+
 extern struct gpio_out g_GAM_DBG_gpio1;
 extern struct gpio_out g_GAM_DBG_gpio2;
 extern struct gpio_out g_GAM_DBG_gpio3;

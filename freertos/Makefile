@@ -46,7 +46,7 @@ LSP         = $(srctree)/arch/$(CONFIG_ARCH_PLATFORM)/lsp/$(CONFIG_CORE_ID)/$(CO
 # the final exe size is minimized.
 INCS       += -Iprojects/$(CONFIG_PROJECT_DIR)/$(CONFIG_CORE_ID)/src -Iprojects/$(CONFIG_PROJECT_DIR)/$(CONFIG_CORE_ID)/include
 INCS       += -Iinclude -Iinclude/hal -Iinclude/hal/sound -Iinclude/osal
-INCS       += -Idrivers/hal/source
+INCS       += -Idrivers/hal/include -Idrivers/hal/source
 INCS       += -Icomponents/thirdparty/freertos
 INCS       += -Ikernel/$(CONFIG_KERNEL_VERSION_DIR)/include -Ikernel/$(CONFIG_KERNEL_VERSION_DIR)/include/private
 INCS       += -Ikernel/$(CONFIG_KERNEL_VERSION_DIR)/FreeRTOS/portable/XCC/Xtensa
