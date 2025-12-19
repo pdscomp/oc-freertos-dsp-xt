@@ -135,7 +135,7 @@ void
 command_set_digital_out_pwm_cycle(uint32_t *args)
 {
     struct digital_out_s *d = oid_lookup(args[0], command_config_digital_out);
-    irq_disable_all();;
+    irq_disable_all();
     if (!move_queue_empty(&d->mq))
         shutdown("Can not set soft pwm cycle ticks while updates pending");
     d->cycle_time = args[1];
@@ -151,7 +151,7 @@ void command_queue_digital_out(uint32_t *args)
     uint32_t time = m->waketime = args[1];
     m->on_duration = args[2];
 
-    irq_disable_all();;
+    irq_disable_all();
     int first_on_queue = move_queue_push(&m->node, &d->mq);
     if (!first_on_queue) {
         irq_enable_all();

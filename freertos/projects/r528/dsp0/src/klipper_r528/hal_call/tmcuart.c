@@ -209,7 +209,7 @@ command_tmcuart_send(uint32_t *args)
         t->bit_time = t->cfg_bit_time;
         t->timer.func = tmcuart_send_event;
     }
-    irq_disable_all();;
+    irq_disable_all();
     t->timer.waketime = timer_read_time() + timer_from_us(200);
     sched_add_timer(&t->timer);
     irq_enable_all();

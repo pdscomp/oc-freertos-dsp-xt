@@ -112,7 +112,7 @@ void command_trsync_start(uint32_t *args)
 {
     // share_space_debug(0, "");
     struct trsync *ts = trsync_oid_lookup(args[0]);
-    irq_disable_all();;
+    irq_disable_all();
     trsync_clear(ts);
     ts->flags = TSF_CAN_TRIGGER;
     ts->report_time.waketime = args[1];
