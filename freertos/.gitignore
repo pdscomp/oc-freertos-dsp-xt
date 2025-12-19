@@ -6,6 +6,7 @@
 *.bin
 *.swp
 *.out
+*.map
 
 arch/*/lsp/*/*/*.a
 arch/*/lsp/*/*.a
