@@ -59,9 +59,9 @@ ifeq ($(CONFIG_FPGA_PLATFORM),y)
 DFLAGS     += -DXT_CLOCK_FREQ=24000000
 endif
 ifeq ($(CONFIG_XCC_O3),y)
-CFLAGS     += -$(CONFIG_XCC_OPT) -g -Wall
+CFLAGS     += -$(CONFIG_XCC_OPT) -g
 else
-CFLAGS     += -$(CONFIG_XCC_OPT) -Os -g -Wall
+CFLAGS     += -$(CONFIG_XCC_OPT) -Os -g
 endif
 CFLAGS     += -ffunction-sections -fdata-sections -mlongcalls $(DFLAGS) $(INCS)
 CFLAGS     += -I$(srctree)/include/generated -include autoconf.h -include map_func.h
