@@ -33,7 +33,7 @@
 #include "sunxi_htimer.h"
 #include "aw_common.h"
 #include <stdlib.h>
-#include <io.h>
+#include <hal_osal.h>
 #include <interrupt.h>
 
 static struct sunxi_htimer *g_htimer;
@@ -148,6 +148,16 @@ int sunxi_htimer_set_periodic(uint32_t delay_us, uint32_t timer, timer_callback 
 
     sunxi_htimer_start(timer, true);
 
+}
+
+void set_htimer_intval(uint32_t value, uint32_t timer)
+{
+    writel(value, HTIMER_INTVAL_LO_REG(timer));
+}
+
+uint32_t read_htimer_current_value(uint32_t timer)
+{
+    return readl(HTIMER_CNTVAL_LO_REG(timer));
 }
 
 void sunxi_htimer_init(void)

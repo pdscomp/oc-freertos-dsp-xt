@@ -142,13 +142,13 @@ static void hal_htimer_irq_callback(void *param)
 }
 void timer_init(void)
 {
-    hal_htimer_init(HAL_HRTIMER1);
+    hal_htimer_init();
     timer1_total_times = 0;
     hal_htimer_set_periodic(HAL_HRTIMER1, 0xffffffff, hal_htimer_irq_callback, NULL);//0xffffffff 20000000
     timer_reset();     //--G-G------
-    
-    irqstatus_t flag = irq_save();  
-    hal_htimer_init(HAL_HRTIMER0);
+
+    irqstatus_t flag = irq_save();
+    // hal_htimer_init() already called above, no need to call again
     hal_htimer_set_periodic(HAL_HRTIMER0, 200000, SysTick_Handler, NULL);
     timer_kick();  //--G-G-6.30-----
     irq_restore(flag);

@@ -53,13 +53,18 @@ typedef enum {
     HAL_TIMER_STATUS_OK                = 0
 } hal_htimer_status_t;
 
+#ifndef TIMER_CALLBACK_DEFINED
+#define TIMER_CALLBACK_DEFINED
 typedef void (*timer_callback)(void *param);
+#endif
 
 void hal_htimer_init(void);
 void hal_htimer_stop(hal_htimer_id timer);
 void hal_htimer_start(hal_htimer_id timer, bool periodic);
 hal_htimer_status_t hal_htimer_set_oneshot(hal_htimer_id timer, uint32_t delay_us, timer_callback callback, void *callback_param);
 hal_htimer_status_t hal_htimer_set_periodic(hal_htimer_id timer, uint32_t delay_us, timer_callback callback, void *callback_param);
+void set_htimer_intval(uint32_t value, uint32_t timer);
+uint32_t read_htimer_current_value(uint32_t timer);
 
 #ifdef __cplusplus
 }

@@ -36,7 +36,7 @@
 void hal_htimer_init(void)
 {
     int ret;
-    ret = hal_clock_enable(HAL_CLK_PERIPH_HSTIMER);
+    ret = hal_clock_enable(799);
     if (ret < 0)
     {
         printf("clk enable error,error num %d\n!", ret);

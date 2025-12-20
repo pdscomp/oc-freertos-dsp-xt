@@ -44,7 +44,7 @@ GPIO_TypeDef * const digital_regs[] = {
    struct gpio_out g_GAM_DBG_gpio3;
    struct gpio_out g_GAM_DBG_gpio4;
 
-int hal_gpio_pinmux_set_function(gpio_pin_t pin, gpio_muxsel_t function_index)
+static int gpio_pinmux_set_function_local(gpio_pin_t pin, gpio_muxsel_t function_index)
 {
     int ret = 0;
 
@@ -153,9 +153,27 @@ void gpio_in_reset(struct gpio_in *g, gpio_pull_status_t pull_up)
 
 uint8_t gpio_in_read(struct gpio_in *g)
 {
-    
+
     GPIO_TypeDef *regs = g->regs;
     return !!(regs->ODR & g->bit);  //
+}
+
+void gpio_peripheral(struct gpio_in *g, gpio_muxsel_t mux, gpio_pull_status_t pull)
+{
+    GPIO_TypeDef *regs = g->regs;
+
+    // Set mux/function
+    uint32_t offset = (g->pin >> MUX_OFFSET_BITS) & MUX_OFFSET_MASK;
+    uint32_t shift = (g->pin & MUX_SHIFT_MASK) << MUX_SHIFT_BITS;
+    uint32_t reg = regs->AFR[offset];
+    reg &= ~(MUX_PINS_MASK << shift);
+    regs->AFR[offset] = reg | (mux << shift);
+
+    // Set pull up/down
+    offset = (g->pin >> PULL_OFFSET_BITS) & PULL_OFFSET_MASK;
+    shift = (g->pin & PULL_SHIFT_MASK) << PULL_SHIFT_BITS;
+    reg = regs->PUPDR[offset] & (~(PULL_PINS_MASK << shift));
+    regs->PUPDR[offset] = reg | (pull << shift);
 }
 
 

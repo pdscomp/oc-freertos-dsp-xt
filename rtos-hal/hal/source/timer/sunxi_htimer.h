@@ -7,12 +7,12 @@
 *
 * DISCLAIMER
 * THIRD PARTY LICENCES MAY BE REQUIRED TO IMPLEMENT THE SOLUTION/PRODUCT.
-* IF YOU NEED TO INTEGRATE THIRD PARTY¡¯S TECHNOLOGY (SONY, DTS, DOLBY, AVS OR MPEGLA, ETC.)
-* IN ALLWINNERS¡¯SDK OR PRODUCTS, YOU SHALL BE SOLELY RESPONSIBLE TO OBTAIN
+* IF YOU NEED TO INTEGRATE THIRD PARTYï¿½ï¿½S TECHNOLOGY (SONY, DTS, DOLBY, AVS OR MPEGLA, ETC.)
+* IN ALLWINNERSï¿½ï¿½SDK OR PRODUCTS, YOU SHALL BE SOLELY RESPONSIBLE TO OBTAIN
 * ALL APPROPRIATELY REQUIRED THIRD PARTY LICENCES.
 * ALLWINNER SHALL HAVE NO WARRANTY, INDEMNITY OR OTHER OBLIGATIONS WITH RESPECT TO MATTERS
 * COVERED UNDER ANY REQUIRED THIRD PARTY LICENSE.
-* YOU ARE SOLELY RESPONSIBLE FOR YOUR USAGE OF THIRD PARTY¡¯S TECHNOLOGY.
+* YOU ARE SOLELY RESPONSIBLE FOR YOUR USAGE OF THIRD PARTYï¿½ï¿½S TECHNOLOGY.
 *
 *
 * THIS SOFTWARE IS PROVIDED BY ALLWINNER"AS IS" AND TO THE MAXIMUM EXTENT
@@ -34,10 +34,11 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "platform.h"
 #include "irqs.h"
-#include "aw_types.h"
 #include <spinlock.h>
+#include "platform_timer.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,8 +56,10 @@ extern "C" {
 #define HTIMER_ERR(fmt, arg...) do {}while(0)
 #endif
 
+#ifndef TIMER_CALLBACK_DEFINED
+#define TIMER_CALLBACK_DEFINED
 typedef void (*timer_callback)(void *param);
-
+#endif
 
 #define HTIMER_IRQ_EN_REG   (SUNXI_HSTIMER_PBASE + 0x00)
 #define HTIMER_IRQ_EN(val)  BIT(val)
@@ -90,6 +93,8 @@ int sunxi_htimer_set_periodic(uint32_t delay_us, uint32_t timer, timer_callback 
 void sunxi_htimer_stop(uint32_t timer);
 void sunxi_htimer_start(uint32_t timer, bool periodic);
 void sunxi_htimer_init();
+void set_htimer_intval(uint32_t value, uint32_t timer);
+uint32_t read_htimer_current_value(uint32_t timer);
 
 #ifdef __cplusplus
 }

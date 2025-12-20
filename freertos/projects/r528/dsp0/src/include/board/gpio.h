@@ -6,6 +6,41 @@
 #include <sunxi_hal_pwm.h>
 
 #include <sunxi_hal_spi.h>
+
+// Missing constants for bit manipulation
+#define PINS_BANK_MASK      0x1F
+#define MUX_OFFSET_BITS     5
+#define MUX_OFFSET_MASK     0x3
+#define MUX_SHIFT_MASK      0x7
+#define MUX_SHIFT_BITS      2
+#define PULL_OFFSET_BITS    4
+#define PULL_OFFSET_MASK    0x1
+#define PULL_SHIFT_MASK     0xF
+#define PULL_SHIFT_BITS     1
+
+// GPIO register structure for SUN8IW20
+typedef struct {
+    volatile uint32_t AFR[4];       // 0x00-0x0C: Alternate function (mux) registers
+    volatile uint32_t ODR;          // 0x10: Output data register
+    volatile uint32_t DLEVEL[2];    // 0x14-0x18: Drive level registers
+    volatile uint32_t _reserved1[2];// 0x1C-0x20: Reserved
+    volatile uint32_t PUPDR[2];     // 0x24-0x28: Pull up/down registers
+    volatile uint32_t _reserved2[1];// 0x2C: Reserved to pad to 0x30
+} GPIO_TypeDef;
+
+// GPIO input pin structure
+struct gpio_in {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint8_t pin;
+};
+
+// GPIO output pin structure
+struct gpio_out {
+    GPIO_TypeDef *regs;
+    uint32_t bit;
+    uint8_t pin;
+};
 extern struct gpio_out g_GAM_DBG_gpio1;
 extern struct gpio_out g_GAM_DBG_gpio2;
 extern struct gpio_out g_GAM_DBG_gpio3;
@@ -55,5 +90,7 @@ struct i2c_config i2c_setup(uint32_t bus, uint32_t rate, uint8_t addr);
 void i2c_write(struct i2c_config config, uint8_t write_len, uint8_t *write);
 void i2c_read(struct i2c_config config, uint8_t reg_len, uint8_t *reg
               , uint8_t read_len, uint8_t *read);
+
+void gpio_peripheral(struct gpio_in *g, gpio_muxsel_t mux, gpio_pull_status_t pull);
 
 #endif // gpio.h
